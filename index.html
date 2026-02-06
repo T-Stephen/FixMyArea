@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FixMyArea - Smart Community Maintenance</title>
+
+<style>
+body{
+    margin:0;
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:#f1f5f9;
+}
+
+header{
+    background:#020617;
+    padding:15px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+    color:#ef4444;
+}
+
+.hero{
+    text-align:center;
+    padding:40px 20px;
+}
+
+.hero h1{
+    font-size:36px;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:auto;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    border:none;
+}
+
+button{
+    margin-top:10px;
+    padding:12px;
+    width:100%;
+    background:#ef4444;
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#dc2626;
+}
+
+.issue{
+    background:#020617;
+    padding:15px;
+    margin-top:10px;
+    border-radius:8px;
+}
+.status{
+    color:yellow;
+}
+.footer{
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
+    background:#020617;
+}
+</style>
+</head>
+
+<body>
+
+<header>🚧 FixMyArea</header>
+
+<div class="hero">
+<h1>Smart Community Maintenance Platform</h1>
+<p>Report issues. Track progress. Improve your neighborhood together.</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h2>📢 Report a Community Issue</h2>
+
+<select id="category">
+<option>Pothole</option>
+<option>Garbage</option>
+<option>Street Light</option>
+<option>Water Leakage</option>
+<option>Other</option>
+</select>
+
+<select id="priority">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+</select>
+
+<textarea id="description" placeholder="Describe the issue clearly..."></textarea>
+
+<button onclick="getLocation()">📍 Get My Location</button>
+<button onclick="reportIssue()">🚀 Report Issue</button>
+
+<p id="locationText"></p>
+</div>
+
+<div class="card">
+<h2>📋 Reported Issues</h2>
+<div id="issueList"></div>
+</div>
+
+<div class="card">
+<h2>🤝 Volunteer Activities</h2>
+<p>Community Park Cleanup - Sunday 9 AM</p>
+<button>Join Event</button>
+</div>
+
+<div class="card">
+<h2>🏆 Top Contributors</h2>
+<p>1. Stephen - 120 pts</p>
+<p>2. Arjun - 90 pts</p>
+<p>3. Meena - 70 pts</p>
+</div>
+
+</div>
+
+<div class="footer">
+FixMyArea © 2026 | Community Driven Solution
+</div>
+
+<script>
+let userLocation="";
+
+function getLocation(){
+    if(navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(pos){
+            userLocation="Lat: "+pos.coords.latitude.toFixed(4)
+            +", Lng: "+pos.coords.longitude.toFixed(4);
+            document.getElementById("locationText").innerText=userLocation;
+        },
+        function(){
+            alert("Location permission denied");
+        });
+    }
+}
+
+function reportIssue(){
+
+    let category=document.getElementById("category").value;
+    let priority=document.getElementById("priority").value;
+    let desc=document.getElementById("description").value;
+
+    if(desc.trim()==""){
+        alert("Please describe the issue");
+        return;
+    }
+
+    let locationToSave = userLocation=="" ? "Location not shared" : userLocation;
+
+    let issueHTML = `
+        <div class="issue">
+        <b>${category}</b> | Priority: ${priority}<br>
+        ${desc}<br>
+        ${locationToSave}<br>
+        Status: <span class="status">🟡 Pending</span>
+        </div>
+    `;
+
+    document.getElementById("issueList").innerHTML += issueHTML;
+
+    document.getElementById("description").value="";
+    document.getElementById("locationText").innerText="";
+    userLocation="";
+}
+</script>
+
+</body>
+</html>
