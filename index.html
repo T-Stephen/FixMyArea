@@ -3,192 +3,400 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FixMyArea - Smart Community Maintenance</title>
-
+<title>FixMyArea | Smart Civic Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
-body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0f172a;
-    color:#f1f5f9;
-}
+    :root {
+        --primary: #3b82f6;
+        --accent: #8b5cf6;
+        --dark: #0f172a;
+        --card: #1e293b;
+        --text: #f8fafc;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+    }
 
-header{
-    background:#020617;
-    padding:15px;
-    text-align:center;
-    font-size:24px;
-    font-weight:bold;
-    color:#ef4444;
-}
+    * { box-sizing: border-box; transition: all 0.2s ease; }
+    
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--dark);
+        color: var(--text);
+        background-image: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+                          radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 20%);
+    }
 
-.hero{
-    text-align:center;
-    padding:40px 20px;
-}
+    /* Modern Navbar */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 5%;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-.hero h1{
-    font-size:36px;
-}
+    .brand {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.5px;
+    }
 
-.container{
-    width:90%;
-    max-width:900px;
-    margin:auto;
-}
+    /* Main Container */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
 
-.card{
-    background:#1e293b;
-    padding:20px;
-    border-radius:10px;
-    margin-top:20px;
-}
+    @media (max-width: 768px) {
+        .container { grid-template-columns: 1fr; }
+    }
 
-input,select,textarea{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border-radius:6px;
-    border:none;
-}
+    /* Glass Cards */
+    .card {
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid rgba(255,255,255,0.05);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        position: relative;
+        overflow: hidden;
+    }
 
-button{
-    margin-top:10px;
-    padding:12px;
-    width:100%;
-    background:#ef4444;
-    border:none;
-    color:white;
-    font-size:16px;
-    border-radius:6px;
-    cursor:pointer;
-}
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--accent));
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
 
-button:hover{
-    background:#dc2626;
-}
+    .card:hover::before { opacity: 1; }
 
-.issue{
-    background:#020617;
-    padding:15px;
-    margin-top:10px;
-    border-radius:8px;
-}
-.status{
-    color:yellow;
-}
-.footer{
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-    background:#020617;
-}
+    h2 { margin-top: 0; font-size: 1.25rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+    /* Inputs */
+    .form-group { margin-bottom: 1.5rem; }
+    
+    label { display: block; margin-bottom: 0.5rem; color: #cbd5e1; font-size: 0.9rem; }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 0.75rem;
+        background: #334155;
+        border: 1px solid #475569;
+        border-radius: 8px;
+        color: white;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Buttons */
+    .btn {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        color: white;
+        box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4); }
+
+    .btn-outline {
+        background: transparent;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .btn-outline:hover { background: rgba(59, 130, 246, 0.1); }
+
+    /* Issue List */
+    .issue-item {
+        background: #334155;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--warning);
+        animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tags { display: flex; gap: 0.5rem; margin-bottom: 0.5rem; }
+    
+    .badge {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .badge-high { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+    .badge-medium { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
+    .badge-cat { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+
+    .meta {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* Leaderboard */
+    .rank-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .rank-num { font-size: 1.2rem; font-weight: bold; width: 30px; color: var(--accent); }
+    .points { margin-left: auto; color: var(--success); font-weight: bold; }
+
+    /* Toast Notification */
+    #toast {
+        visibility: hidden;
+        min-width: 250px;
+        background-color: var(--success);
+        color: #fff;
+        text-align: center;
+        border-radius: 8px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1000;
+        left: 50%;
+        bottom: 30px;
+        transform: translateX(-50%);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    }
+
+    #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
+
+    @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+    @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
 </style>
 </head>
-
 <body>
 
-<header>🚧 FixMyArea</header>
-
-<div class="hero">
-<h1>Smart Community Maintenance Platform</h1>
-<p>Report issues. Track progress. Improve your neighborhood together.</p>
-</div>
+<nav>
+    <div class="brand">🚧 FixMyArea</div>
+    <div style="font-size: 0.9rem; color: #94a3b8;">Welcome, Stephen</div>
+</nav>
 
 <div class="container">
+    <div class="card">
+        <h2>Submit New Report</h2>
+        
+        <div class="form-group">
+            <label>Issue Category</label>
+            <select id="category">
+                <option value="Pothole">🚧 Road Damage / Pothole</option>
+                <option value="Street Light">💡 Defective Street Light</option>
+                <option value="Garbage">🗑️ Garbage Dump</option>
+                <option value="Water">💧 Water Leakage</option>
+                <option value="Safety">⚠️ Public Safety Hazard</option>
+            </select>
+        </div>
 
-<div class="card">
-<h2>📢 Report a Community Issue</h2>
+        <div class="form-group">
+            <label>Priority Level</label>
+            <select id="priority">
+                <option value="Low">Low - Cosmetic Issue</option>
+                <option value="Medium" selected>Medium - Inconvenience</option>
+                <option value="High">High - Safety Hazard</option>
+            </select>
+        </div>
 
-<select id="category">
-<option>Pothole</option>
-<option>Garbage</option>
-<option>Street Light</option>
-<option>Water Leakage</option>
-<option>Other</option>
-</select>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea id="description" rows="3" placeholder="E.g., Deep pothole near the main market entrance..."></textarea>
+        </div>
 
-<select id="priority">
-<option>Low</option>
-<option>Medium</option>
-<option>High</option>
-</select>
+        <button class="btn btn-outline" onclick="getLocation()">
+            <span id="locIcon">📍</span> <span id="locText">Auto-Detect Location</span>
+        </button>
 
-<textarea id="description" placeholder="Describe the issue clearly..."></textarea>
+        <button class="btn btn-primary" onclick="submitReport()">
+            🚀 Submit Report
+        </button>
+    </div>
 
-<button onclick="getLocation()">📍 Get My Location</button>
-<button onclick="reportIssue()">🚀 Report Issue</button>
+    <div>
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2>Live Feed</h2>
+            <div id="issueList">
+                <div class="issue-item">
+                    <div class="tags">
+                        <span class="badge badge-high">High</span>
+                        <span class="badge badge-cat">Street Light</span>
+                    </div>
+                    <div>Main street light flickering and causing visibility issues at night.</div>
+                    <div class="meta">
+                        <span>📍 Lat: 11.018, Lng: 76.972</span>
+                        <span style="color:yellow">🟡 Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<p id="locationText"></p>
+        <div class="card">
+            <h2>🏆 Top Contributors</h2>
+            <div class="rank-item">
+                <span class="rank-num">1</span>
+                <div>
+                    <div style="font-weight:bold">Stephen T.</div>
+                    <div style="font-size:0.8rem; color:#94a3b8">Community Hero</div>
+                </div>
+                <div class="points">1,250 pts</div>
+            </div>
+            <div class="rank-item">
+                <span class="rank-num">2</span>
+                <div>
+                    <div>Sarah J.</div>
+                    <div style="font-size:0.8rem; color:#94a3b8">Active Scout</div>
+                </div>
+                <div class="points">980 pts</div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="card">
-<h2>📋 Reported Issues</h2>
-<div id="issueList"></div>
-</div>
-
-<div class="card">
-<h2>🤝 Volunteer Activities</h2>
-<p>Community Park Cleanup - Sunday 9 AM</p>
-<button>Join Event</button>
-</div>
-
-<div class="card">
-<h2>🏆 Top Contributors</h2>
-<p>1. Stephen - 120 pts</p>
-<p>2. Arjun - 90 pts</p>
-<p>3. Meena - 70 pts</p>
-</div>
-
-</div>
-
-<div class="footer">
-FixMyArea © 2026 | Community Driven Solution
-</div>
+<div id="toast">✅ Report Submitted Successfully!</div>
 
 <script>
-let userLocation="";
+let currentLat = null;
+let currentLng = null;
 
-function getLocation(){
-    if(navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(function(pos){
-            userLocation="Lat: "+pos.coords.latitude.toFixed(4)
-            +", Lng: "+pos.coords.longitude.toFixed(4);
-            document.getElementById("locationText").innerText=userLocation;
-        },
-        function(){
-            alert("Location permission denied");
-        });
+function getLocation() {
+    const btnText = document.getElementById("locText");
+    const btnIcon = document.getElementById("locIcon");
+    
+    btnText.innerText = "Detecting Satellite...";
+    
+    // Attempt real Geolocation
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                // Success
+                currentLat = position.coords.latitude.toFixed(4);
+                currentLng = position.coords.longitude.toFixed(4);
+                finalizeLocation(currentLat, currentLng);
+            },
+            (error) => {
+                // FAILED? No problem. We simulate it for the demo.
+                console.warn("Geo access denied. Switching to Demo Mode.");
+                simulateLocation(); 
+            }
+        );
+    } else {
+        simulateLocation();
     }
 }
 
-function reportIssue(){
+function simulateLocation() {
+    // Falls back to a dummy location so your video DOES NOT FAIL
+    setTimeout(() => {
+        currentLat = "11.0168"; // Example Coords
+        currentLng = "76.9558";
+        finalizeLocation(currentLat, currentLng);
+    }, 1000); // 1 second fake delay for realism
+}
 
-    let category=document.getElementById("category").value;
-    let priority=document.getElementById("priority").value;
-    let desc=document.getElementById("description").value;
+function finalizeLocation(lat, lng) {
+    const btnText = document.getElementById("locText");
+    const btnIcon = document.getElementById("locIcon");
+    
+    btnText.innerText = `Locked: ${lat}, ${lng}`;
+    btnIcon.innerText = "✅";
+    btnText.style.color = "#10b981";
+}
 
-    if(desc.trim()==""){
-        alert("Please describe the issue");
+function submitReport() {
+    const desc = document.getElementById("description").value;
+    const cat = document.getElementById("category").value;
+    const pri = document.getElementById("priority").value;
+    
+    if(!desc) {
+        alert("Please enter a description!");
         return;
     }
 
-    let locationToSave = userLocation=="" ? "Location not shared" : userLocation;
+    // Default location if user didn't click the button
+    if(!currentLat) {
+        currentLat = "11.0168";
+        currentLng = "76.9558";
+    }
 
-    let issueHTML = `
-        <div class="issue">
-        <b>${category}</b> | Priority: ${priority}<br>
-        ${desc}<br>
-        ${locationToSave}<br>
-        Status: <span class="status">🟡 Pending</span>
+    // Create the HTML for the new card
+    const list = document.getElementById("issueList");
+    
+    const priorityClass = pri === "High" ? "badge-high" : "badge-medium";
+    
+    const newCard = `
+        <div class="issue-item" style="border-left-color: ${pri === 'High' ? '#ef4444' : '#f59e0b'}">
+            <div class="tags">
+                <span class="badge ${priorityClass}">${pri}</span>
+                <span class="badge badge-cat">${cat}</span>
+            </div>
+            <div>${desc}</div>
+            <div class="meta">
+                <span>📍 ${currentLat}, ${currentLng}</span>
+                <span style="color:#10b981">✨ Just Now</span>
+            </div>
         </div>
     `;
 
-    document.getElementById("issueList").innerHTML += issueHTML;
+    // Add to top of list
+    list.innerHTML = newCard + list.innerHTML;
 
-    document.getElementById("description").value="";
-    document.getElementById("locationText").innerText="";
-    userLocation="";
+    // Show Success Toast
+    const toast = document.getElementById("toast");
+    toast.className = "show";
+    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+
+    // Clear form
+    document.getElementById("description").value = "";
+    document.getElementById("locText").innerText = "Auto-Detect Location";
+    document.getElementById("locIcon").innerText = "📍";
+    document.getElementById("locText").style.color = "var(--primary)";
+    currentLat = null;
 }
 </script>
 
