@@ -4,3 +4,4 @@ FixMyArea is a decentralized community maintenance solution designed to bridge t
 🚀 Live Demo
 Link: https://t-stephen.github.io/FixMyArea/
 
+Update for badge
